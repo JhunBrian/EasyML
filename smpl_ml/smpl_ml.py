@@ -13,16 +13,16 @@ class VariableNotInitializedError(Exception):
         else:
             err = f"Variable '{self.variable_name}' is not initialized yet."
         return err
-    
+
+
 class Cat2Num:
     """
     Cat2Num: Categorical to Numerical
     """
-
     def __init__(self):
         self.dict_map = {}
-
-    def cat2num(self, df: pd.DataFrame) -> pd.DataFrame:
+        
+    def cat2num(self, df: pd.DataFrame):
         """
         Convert categorical columns in the DataFrame to numerical representation.
 
@@ -34,19 +34,20 @@ class Cat2Num:
         """
         df = df.copy()
         for col in df:
+            
             if df[col].dtype == 'object' or df[col].dtype == 'category':
                 if df[col].dtype == 'category':
                     df[col] = df[col].astype('object')
-
+                    
                 self.dict_map[col] = {}
                 unique_values = df[col].unique()
                 for repl, orig in enumerate(unique_values):
                     self.dict_map[col][orig] = repl
                     df[col].replace(orig, repl, inplace=True)
-
+                    
         return df
-
-    def num2cat(self, df: pd.DataFrame) -> pd.DataFrame:
+    
+    def num2cat(self, df: pd.DataFrame):
         """
         Convert numerical representation of categorical columns back to their original values.
 
@@ -62,15 +63,16 @@ class Cat2Num:
         df = df.copy()
         if self.dict_map == {}:
             raise VariableNotInitializedError("dict_map", suggestion="Try executing 'cat2num()' first.")
-
+            
         for col in df:
             if col in self.dict_map.keys():
                 for orig, repl in self.dict_map[col].items():
                     df[col].replace(repl, orig, inplace=True)
-
+                    
         return df
-    
-def split_data(df: pd.DataFrame, test_size: float = 0.25, shuffle: bool = True, random_state: int = 143) -> tuple:
+
+
+def split_data(df, test_size=0.25, shuffle=True, random_state=143):
     """
     Split the DataFrame into training and testing datasets.
 
@@ -86,13 +88,39 @@ def split_data(df: pd.DataFrame, test_size: float = 0.25, shuffle: bool = True, 
     """
     if shuffle:
         df = df.sample(frac=1, random_state=random_state)
-
+    
     train = df[:-int(len(df) * test_size)]
     test = df[-int(len(df) * test_size):]
     return train, test
 
 
-def metrics(matrix: np.ndarray, class_labels: list) -> pd.DataFrame:
+def reg_metrics(y_true, y_pred):
+    """
+    Calculate performance metrics based on the provided y_true and y_pred.
+
+    Args:
+        y_true (np.ndarray): True data.
+        y_pred (np.ndarray): The rpedicted data.
+
+    Returns:
+        pd.DataFrame: A DataFrame containing performance metrics.
+
+    """
+    mse = np.mean((y_true - y_pred) ** 2)
+    rmse = np.sqrt(mse)
+    mae = np.mean(np.abs(y_true - y_pred))
+    r2 = 1 - (np.sum((y_true - y_pred) ** 2) / np.sum((y_true - np.mean(y_true)) ** 2))
+
+    dataframe = pd.DataFrame(data={'MSE': mse,
+                                   'RMSE': rmse,
+                                   'MAE': mae,
+                                   'R-squared': r2},
+                             index=['Metrics'])
+    
+    return dataframe.T
+
+
+def clf_metrics(matrix, class_labels):
     """
     Calculate performance metrics based on the confusion matrix.
 
@@ -127,9 +155,9 @@ def metrics(matrix: np.ndarray, class_labels: list) -> pd.DataFrame:
     dataframe['Accuracy'] = np.round(np.sum(TP) / np.sum(matrix), 2)
     return dataframe
 
-class TrainClassifier:
-    def __init__(self, df, target, features, model, test_size=0.25, random_state=143, shuffle=True):
 
+class TrainModel:
+    def __init__(self, df: pd.DataFrame, target: str, features: list, model, test_size=0.25, random_state=143, shuffle=True):
         """
         Initialize the TrainClassifier object.
 
@@ -150,14 +178,15 @@ class TrainClassifier:
         self.__random_state = random_state
         self.__shuffle = shuffle
         
-        self.__train = None
-        self.__test = None
-        self.__split_data = split_data
         self.__lbl_encoder = Cat2Num()
         self.__split_data = split_data
-        self.__confusion_matrix = confusion_matrix
-        self.__metrics = metrics
-        self.__clf = None
+        self.__reg_metrics = reg_metrics
+        self.__clf_metrics = clf_metrics
+        self.__conf_matrix = confusion_matrix
+        self.__type = None
+        self.__train = None
+        self.__test = None
+        self.__fitted_model = None
         
     def fit(self, verbose=True):
         """
@@ -173,18 +202,26 @@ class TrainClassifier:
                                         random_state=self.__random_state)
         
         X_train, y_train = train[self.__features], train[self.__target]
-        clf = self.__model.fit(X=X_train, y=y_train)
+        model_ = self.__model.fit(X=X_train, y=y_train)
+        y_pred = model_.predict(X_train)
         
-        if verbose:
-            y_pred = clf.predict(X_train)
-            matrix = self.__confusion_matrix(y_train, y_pred)
-            report_df = self.__metrics(matrix, self.__lbl_encoder.dict_map[self.__target].keys())
-            display(report_df)
-                    
+        if self.__df[self.__target].dtype == 'float64':
+            self.__type = 'regression'
+            if verbose:
+                report_df = self.__reg_metrics(y_train, y_pred)
+                display(report_df)
+                
+        else:
+            self.__type = 'classification'
+            if verbose:
+                matrix = self.__conf_matrix(y_train, y_pred)
+                report_df = self.__clf_metrics(matrix, self.__lbl_encoder.dict_map[self.__target].keys())
+                display(report_df)
+            
+        self.__fitted_model = model_
         self.__train = train
         self.__test = test
-        self.__clf = clf
-        
+            
     def evaluate(self, verbose=True):
         """
         Evaluate the trained machine learning model using the test data.
@@ -198,16 +235,21 @@ class TrainClassifier:
         Raises:
             VariableNotInitializedError: If `fit()` has not been executed before calling `evaluate()`.
         """
-        if self.__clf == None:
+        if self.__fitted_model == None:
             raise VariableNotInitializedError("model", suggestion="Try fitting it first using `fit()` method.")
-            
-        X_test = self.__test[self.__features]
-        y_test = self.__test[self.__target]
+
+        X_test, y_test = self.__test[self.__features], self.__test[self.__target]
+        y_pred = self.__fitted_model.predict(X_test)
         
-        if verbose:
-            y_pred = self.__clf.predict(X_test)
-            matrix = self.__confusion_matrix(y_test, y_pred)
-            report_df = self.__metrics(matrix, self.__lbl_encoder.dict_map[self.__target].keys())
-            display(report_df)
-        
-        return self.__clf
+        if self.__type == 'regression':
+            if verbose:
+                report_df = self.__reg_metrics(y_test, y_pred)
+                display(report_df)
+                
+        elif self.__type == 'classification':
+            if verbose:
+                matrix = self.__conf_matrix(y_test, y_pred)
+                report_df = self.__clf_metrics(matrix, self.__lbl_encoder.dict_map[self.__target].keys())
+                display(report_df)
+                
+        return self.__fitted_model
