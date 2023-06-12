@@ -1,6 +1,9 @@
 from setuptools import setup, find_packages
  
-# python setup.py sdist bdist_wheel
+# python setup.py sdist (for initial)
+
+# python setup.py sdist bdist_wheel (for update)
+
 # twine check dist/*
 # twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
 
@@ -19,7 +22,7 @@ dependencies = ['pandas',
                 'scikit-learn']
 
 setup(
-  name='EasyML',
+  name='SimpleML',
   version='1.0.0',
   description=desc,
   long_description=open('README.md').read() + '\n\n' + open('CHANGELOG.txt').read(),
