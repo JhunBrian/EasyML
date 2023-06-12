@@ -15,7 +15,7 @@ classifiers = [
   'Programming Language :: Python :: 3'
 ]
 
-desc = """SmplML is a user-friendly Python library for streamlined machine learning classification. It offers intuitive functions for data preprocessing, model training, and evaluation of both classification and regression tasks. Ideal for beginners and experts alike, SmplML simplifies tasks, enabling you to gain valuable insights from your data with ease."""
+desc = """SmplML is a user-friendly Python module for streamlined machine learning classification and regression. It offers intuitive functionality for data preprocessing, model training, and evaluation. Ideal for beginners and experts alike, SmplML simplifies ML tasks, enabling you to gain valuable insights from your data with ease."""
  
 dependencies = ['pandas', 
                 'numpy', 
@@ -23,7 +23,7 @@ dependencies = ['pandas',
 
 setup(
   name='SmplML',
-  version='1.0.3',
+  version='1.0.4',
   description=desc,
   long_description=open('README.md').read() + '\n\n' + open('CHANGELOG.txt').read(),
   long_description_content_type='text/markdown',
