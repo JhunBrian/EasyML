@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-from sklearn.metrics import confusion_matrix
 
 class VariableNotInitializedError(Exception):
     def __init__(self, variable_name, suggestion=None):
@@ -118,6 +117,31 @@ def reg_metrics(y_true, y_pred):
                              index=['Metrics'])
     
     return dataframe.T
+
+
+def confusion_matrix(y_true, y_pred):
+    """
+    Compute the confusion matrix based on the true and predicted labels.
+
+    Args:
+        y_true (list or array-like): True labels.
+        y_pred (list or array-like): Predicted labels.
+
+    Returns:
+        list: Confusion matrix as a 2D list.
+    """
+    # Get unique labels
+    labels = list(set(y_true).union(set(y_pred)))
+    labels.sort()
+
+    # Initialize confusion matrix
+    matrix = [[0] * len(labels) for _ in range(len(labels))]
+
+    # Populate confusion matrix
+    for true, pred in zip(y_true, y_pred):
+        matrix[labels.index(true)][labels.index(pred)] += 1
+
+    return matrix
 
 
 def clf_metrics(matrix, class_labels):

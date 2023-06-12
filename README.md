@@ -4,7 +4,7 @@ SmplML is a user-friendly Python module for streamlined machine learning classif
 
 ## Features
 
-- Data preprocessing: Easily handle encoding categorical variables.
+- Data preprocessing: Easily handle encoding categorical variables and data partitioning.
 - Model training: Train various classification and regression models with just a few lines of code.
 - Model evaluation: Evaluate model performance using common metrics and visualizations.
 - This module is designed to seamlessly handle various scikit-learn models, making it flexible for handling sklearn-like model formats.
@@ -17,7 +17,9 @@ pip install SimpleML
 ```
 
 ## Usage
-The `TrainModel` class is designed to handle both classification and regression tasks. It determines the task type based on the `target` parameter. If the `target` has a `float` data type, the class automatically redirects the procedures to regression; otherwise, it assumes a classification task.
+The `TrainModel` class is designed to handle both classification and regression tasks. It determines the task type based on the `target` parameter. If the `target` has a `float` data type, the class automatically redirects the procedures to regression; otherwise, it assumes a classification task. 
+
+Data  preparation like data spliting and converting categorical data into numerical data is also automatically executed when calling the `fit()` method
 
 ### Classification
 ```python
@@ -32,7 +34,7 @@ df = sns.load_dataset('penguins')
 
 # Set the target and features
 target = 'species'
-features = df.iloc[:, df.columns != target].columns
+features = df.iloc[:, df.columns != target].columns # list of columns
 
 # Create the classifier trainer
 clf_trainer = TrainModel(df.dropna(), target=target, features=features, model=KNeighborsClassifier())
@@ -66,7 +68,7 @@ df = sns.load_dataset('iris')
 
 # Set the target and features
 target = 'sepal_length'
-features = df.columns[1:]
+features = df.columns[1:] # list of columns
 
 # Create the regressor trainer
 reg_trainer = TrainModel(df.dropna(), target=target, features=features, model=KNeighborsRegressor())
