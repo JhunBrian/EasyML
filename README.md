@@ -1,21 +1,16 @@
-# Time Series Binder
+# EasyML: Simplified Machine Learning for Classification
 
-Time Series Binder is a Python library for time series analysis and forecasting. It provides a comprehensive set of tools and models to manipulate, visualize, and predict time series data. This library is designed to assist researchers and analysts in performing various time series tasks with ease and efficiency.
+EasyML is a user-friendly Python library for streamlined machine learning classification. It offers intuitive modules for data preprocessing, model training, and evaluation. Ideal for beginners and experts alike, EasyML simplifies classification tasks, enabling you to gain valuable insights from your data with ease.
 
 ## Features
 
-- Integration with Pandas for seamless data manipulation and preprocessing.
-- Statistical methods for analyzing time series data, including trend analysis, seasonality decomposition, and outlier detection.
-- Neural network models powered by Keras for advanced time series forecasting.
-- Integration with the NeuralProphet library for additional forecasting capabilities.
-- Visualization tools for creating insightful plots and visual representations of time series data.
-- Integration with scikit-learn for additional machine learning functionality.
+- Data preprocessing: Easily handle encoding categorical variables.
+- Model training: Train various classification models with just a few lines of code.
+- Model evaluation: Evaluate model performance using common metrics and visualizations.
 
+## Installation
 
-## Import
+You can install EasyML using pip:
 
-`from ts_binder import data_processing`
-`from ts_binder import trainer`
-
-`from ts_binder import forecaster`
-`from ts_binder import helpers`
+```shell
+pip install easyml
