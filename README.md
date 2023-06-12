@@ -42,10 +42,9 @@ model = trainer.evaluate()
 
 `model` when `verbose` is set to `True` will return a DataFrame of classification metrics.
 
-```markdown
+
 |    | Recall | Specificity | Precision | F1-Score | Accuracy |
 |----|--------|-------------|-----------|----------|----------|
 | Adelie | 0.91   | 0.70        | 0.67      | 0.77     | 0.76     |
 | Chinstrap | 0.38   | 0.92        | 0.62      | 0.47     | 0.76     |
 | Gentoo | 0.86   | 1.00        | 1.00      | 0.92     | 0.76     |
-```
