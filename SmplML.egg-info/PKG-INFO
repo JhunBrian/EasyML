@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: SmplML
-Version: 1.0.0
+Version: 1.0.1
 Summary: SmplML is a user-friendly Python library for streamlined machine learning classification. It offers intuitive modules for data preprocessing, feature engineering, model training, and evaluation. Ideal for beginners and experts alike, SmplML simplifies classification tasks, enabling you to gain valuable insights from your data with ease.
 Home-page: https://github.com/JhunBrian/SmplML
 Author: Jhun Brian Andam
@@ -28,6 +28,6 @@ SmplML is a user-friendly Python library for streamlined machine learning classi
 Change Log
 ==================
 
-1.0.0 (06/12/2023)
+1.0.1 (06/12/2023)
 ------------------
 Initial Version

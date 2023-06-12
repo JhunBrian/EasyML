@@ -8,4 +8,5 @@ SmplML.egg-info/SOURCES.txt
 SmplML.egg-info/dependency_links.txt
 SmplML.egg-info/requires.txt
 SmplML.egg-info/top_level.txt
+smpl_ml/__init__.py
 smpl_ml/classification_helpers.py
