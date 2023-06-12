@@ -22,7 +22,7 @@ setup(
   name='EasyML',
   version='1.0.0',
   description=desc,
-  long_description=open('README.txt').read() + '\n\n' + open('CHANGELOG.txt').read(),
+  long_description=open('README.md').read() + '\n\n' + open('CHANGELOG.txt').read(),
   long_description_content_type='text/markdown',
   url='https://github.com/JhunBrian/EasyML',  
   author='Jhun Brian Andam',

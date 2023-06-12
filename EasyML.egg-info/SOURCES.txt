@@ -1,0 +1,11 @@
+CHANGELOG.txt
+LICENSE
+MANIFEST.in
+README.md
+classification_helpers.py
+setup.py
+EasyML.egg-info/PKG-INFO
+EasyML.egg-info/SOURCES.txt
+EasyML.egg-info/dependency_links.txt
+EasyML.egg-info/requires.txt
+EasyML.egg-info/top_level.txt
