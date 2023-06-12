@@ -15,19 +15,19 @@ classifiers = [
   'Programming Language :: Python :: 3'
 ]
 
-desc = """EasyML is a user-friendly Python library for streamlined machine learning classification. It offers intuitive modules for data preprocessing, feature engineering, model training, and evaluation. Ideal for beginners and experts alike, EasyML simplifies classification tasks, enabling you to gain valuable insights from your data with ease."""
+desc = """SmplML is a user-friendly Python library for streamlined machine learning classification. It offers intuitive modules for data preprocessing, feature engineering, model training, and evaluation. Ideal for beginners and experts alike, SmplML simplifies classification tasks, enabling you to gain valuable insights from your data with ease."""
  
 dependencies = ['pandas', 
                 'numpy', 
                 'scikit-learn']
 
 setup(
-  name='SimpleML',
+  name='SmplML',
   version='1.0.0',
   description=desc,
   long_description=open('README.md').read() + '\n\n' + open('CHANGELOG.txt').read(),
   long_description_content_type='text/markdown',
-  url='https://github.com/JhunBrian/EasyML',  
+  url='https://github.com/JhunBrian/SmplML',  
   author='Jhun Brian Andam',
   author_email='brianandam123@gmail.com',
   license='MIT', 

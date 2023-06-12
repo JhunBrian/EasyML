@@ -1,6 +1,6 @@
-# EasyML: Simplified Machine Learning for Classification
+# SmplML / SimpleML: Simplified Machine Learning for Classification
 
-EasyML is a user-friendly Python library for streamlined machine learning classification. It offers intuitive modules for data preprocessing, model training, and evaluation. Ideal for beginners and experts alike, EasyML simplifies classification tasks, enabling you to gain valuable insights from your data with ease.
+SmplML is a user-friendly Python library for streamlined machine learning classification. It offers intuitive modules for data preprocessing, model training, and evaluation. Ideal for beginners and experts alike, EasyML simplifies classification tasks, enabling you to gain valuable insights from your data with ease.
 
 ## Features
 
