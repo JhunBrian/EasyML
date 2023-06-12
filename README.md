@@ -17,10 +17,12 @@ pip install SimpleML
 
 ## Usage
 
+### Classification
 ```python
 import seaborn as sns
 import pandas as pd
-from smpl_ml.classification_helpers import TrainClassifier
+from smpl_ml.smpl_ml import TrainModel
+
 from sklearn.neighbors import KNeighborsClassifier
 
 # Load the dataset
@@ -31,13 +33,13 @@ target = 'species'
 features = df.iloc[:, df.columns != target].columns
 
 # Create the classifier trainer
-trainer = TrainClassifier(df.dropna(), target=target, features=features, model=KNeighborsClassifier())
+clf_trainer = TrainModel(df.dropna(), target=target, features=features, model=KNeighborsClassifier())
 
 # Fit the model
-trainer.fit()
+clf_trainer.fit()
 
 # Evaluate the model
-model = trainer.evaluate()
+clf_model = clf_trainer.evaluate()
 ```
 
 `model` when `verbose` is set to `True` will return a DataFrame of classification metrics.
@@ -48,3 +50,35 @@ model = trainer.evaluate()
 | Adelie | 0.91   | 0.70        | 0.67      | 0.77     | 0.76     |
 | Chinstrap | 0.38   | 0.92        | 0.62      | 0.47     | 0.76     |
 | Gentoo | 0.86   | 1.00        | 1.00      | 0.92     | 0.76     |
+
+### Regression
+```python
+import seaborn as sns
+import pandas as pd
+from smpl_ml.smpl_ml import TrainModel
+
+from sklearn.neighbors import KNeighborsRegressor
+
+# Load the dataset
+df = sns.load_dataset('iris')
+
+# Set the target and features
+target = 'sepal_length'
+features = df.columns[1:]
+
+# Create the regressor trainer
+reg_trainer = TrainModel(df.dropna(), target=target, features=features, model=KNeighborsRegressor())
+
+# Fit the model
+reg_trainer.fit()
+
+# Evaluate the model
+reg_model = reg_trainer.evaluate()
+```
+
+|   |Metrics|
+|---|-------|
+|MSE|0.11|
+|RMSE|0.34|
+|MAE|0.27|
+|R-Squared|0.74|
