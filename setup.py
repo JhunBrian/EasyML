@@ -1,6 +1,4 @@
 from setuptools import setup, find_packages
-
-# jupyter nbconvert --to markdown YourNotebook.ipynb
  
 # python setup.py sdist (for initial)
 
@@ -17,7 +15,7 @@ classifiers = [
   'Programming Language :: Python :: 3'
 ]
 
-desc = """SmplML is a comprehensive Python module designed for machine learning classification and regression tasks. It offers a range of features and tools that simplify the entire ML workflow, from data preprocessing to model training and evaluation. With SmplML, you can efficiently handle your datasets, experiment with various algorithms, and obtain predictions. Whether you're a beginner or an experienced practitioner, SmplML empowers you to harness the full potential of machine learning in a straightforward and efficient manner."""
+desc = """SmplML is a user-friendly Python module for streamlined machine learning classification and regression. It offers intuitive functionality for data preprocessing, model training, and evaluation. Ideal for beginners and experts alike, SmplML simplifies ML tasks, enabling you to gain valuable insights from your data with ease."""
  
 dependencies = ['pandas', 
                 'numpy', 
